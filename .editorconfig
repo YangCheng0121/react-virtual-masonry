@@ -1,0 +1,20 @@
+# EditorConfig is awesome: http://EditorConfig.org
+#
+# root                      表明是最顶层的配置文件，发现设为 true 时，EditorConfig 插件才会停止查找 .editorconfig 文件
+# indent_style              缩进使用 tab 或者 space
+# indent_size               缩进为 space 时，缩进的字符数
+# tab_width                 缩进为 tab 时，缩进的宽度
+# end_of_line               换行符的类型。lf, cr, crlf三种
+# charset                   文件的 charset。有以下几种类型：latin1, utf-8, utf-8-bom, utf-16be, utf-16le
+# trim_trailing_whitespace  是否自动删除行尾空格（true：是，false：否）
+# insert_final_newline      文件是否使以空白行结尾（true：是，false：否）
+
+root = true                         # 根目录的配置文件，编辑器会由当前目录向上查找，如果找到 `roor = true` 的文件，则不再查找
+
+[*]
+indent_style = space                # 空格缩进,可选"space"、"tab"
+indent_size = 2                     # 缩进空格为2个
+end_of_line = lf                    # 结尾换行符，可选"lf"、"cr"、"crlf"
+charset = utf-8                     # 文件编码是 utf-8
+trim_trailing_whitespace = true     # 不保留行末的空格
+insert_final_newline = true         # 文件末尾添加一个空行
