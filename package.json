@@ -14,7 +14,7 @@
     "build": "rollup -c",
     "dev": "vite",
     "preview": "vite preview",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --project tsconfig.build.json --noEmit",
     "prepublishOnly": "npm run type-check && npm run build"
   },
   "keywords": [

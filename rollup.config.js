@@ -28,6 +28,8 @@ export default {
       declarationDir: "./dist",
       exclude: ["demo/**/*", "**/*.test.tsx", "**/*.test.ts"],
       jsx: "react",
+      target: "ES2015",
+      noEmit: false,
     }),
   ],
   external: ["react", "react-dom"],
