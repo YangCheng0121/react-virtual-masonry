@@ -1,10 +1,71 @@
 import { useState } from "react";
 import DynamicMasonryView from "../src/DynamicMasonryView";
 import { loadImageData } from "./imageData";
+import CodeBlock from "./CodeBlock";
+import { useI18n } from "./App";
+import React from "react";
+
+const codeExample = `import { DynamicMasonryView } from 'react-virtual-masonry';
+
+function Gallery() {
+  const [layoutType, setLayoutType] = useState(true); // true=waterfall, false=equal-height
+
+  const loadData = async (page: number, pageSize: number) => {
+    const response = await fetch(\`/api/gallery?page=\${page}&size=\${pageSize}\`);
+    const data = await response.json();
+
+    // First request returns layout type
+    if (page === 1) {
+      return {
+        data: data.items,
+        hasMore: data.hasMore,
+        isMasonry: layoutType,
+      };
+    }
+
+    return {
+      data: data.items,
+      hasMore: data.hasMore,
+    };
+  };
+
+  return (
+    <DynamicMasonryView
+      isMasonry={layoutType}
+      loadData={loadData}
+      pageSize={30}
+      waterfallConfig={{
+        minColumnWidth: 200,
+        maxColumnWidth: 350,
+        gap: 16,
+      }}
+      equalHeightConfig={{
+        targetRowHeight: 245,
+        sizeRange: [230, 260],
+        gap: 8,
+      }}
+      renderItem={(item, index, isMasonry) => (
+        <div
+          style={{
+            position: 'absolute',
+            left: item.x,
+            top: item.y,
+            width: item.width,
+            height: item.height,
+          }}
+        >
+          <img src={item.url} alt={item.title} />
+        </div>
+      )}
+    />
+  );
+}`;
 
 export default function DynamicDemo() {
   const [layoutType, setLayoutType] = useState<boolean>(true); // true=瀑布流, false=等高
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
+  const [showCode, setShowCode] = useState(false);
+  const {t} = useI18n();
 
   const loadData = async (page: number, pageSize: number) => {
     const result = await loadImageData(page, pageSize);
@@ -31,15 +92,42 @@ export default function DynamicDemo() {
           marginBottom: "20px",
         }}
       >
-        <h2 style={{margin: "0 0 10px 0", fontSize: "18px"}}>
-          动态布局切换
-        </h2>
-        <p style={{margin: "0 0 15px 0", color: "#666", fontSize: "14px"}}>
-          可以根据接口返回的数据自动切换布局类型,也可以手动控制
-        </p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: "15px",
+          }}
+        >
+          <div>
+            <h2 style={{margin: "0 0 10px 0", fontSize: "18px"}}>
+              {t.dynamic.title}
+            </h2>
+            <p style={{margin: "0 0 15px 0", color: "#666", fontSize: "14px"}}>
+              {t.dynamic.description}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowCode(!showCode)}
+            style={{
+              padding: "8px 16px",
+              background: showCode ? "#2c3e50" : "#3498db",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontSize: "14px",
+              fontWeight: "500",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {showCode ? t.dynamic.hideCode : t.dynamic.showCode}
+          </button>
+        </div>
 
         <div style={{display: "flex", gap: "10px", alignItems: "center"}}>
-          <span style={{fontWeight: "500"}}>当前布局:</span>
+          <span style={{fontWeight: "500"}}>{t.dynamic.currentLayout}</span>
           <button
             onClick={() => setLayoutType(true)}
             style={{
@@ -51,7 +139,7 @@ export default function DynamicDemo() {
               cursor: "pointer",
             }}
           >
-            瀑布流
+            {t.dynamic.waterfallBtn}
           </button>
           <button
             onClick={() => setLayoutType(false)}
@@ -64,10 +152,12 @@ export default function DynamicDemo() {
               cursor: "pointer",
             }}
           >
-            等高布局
+            {t.dynamic.equalHeightBtn}
           </button>
         </div>
       </div>
+
+      {showCode && <CodeBlock code={codeExample}/>}
 
       <DynamicMasonryView
         key={layoutType ? "masonry" : "equal"}
@@ -166,7 +256,7 @@ export default function DynamicDemo() {
                       display: "inline-block",
                     }}
                   >
-                    {isMasonry ? "瀑布流" : "等高布局"}
+                    {isMasonry ? t.dynamic.waterfallBtn : t.dynamic.equalHeightBtn}
                   </div>
                 </div>
               </>
@@ -205,7 +295,7 @@ export default function DynamicDemo() {
                     borderRadius: "3px",
                   }}
                 >
-                  {isMasonry ? "瀑布流" : "等高布局"}
+                  {isMasonry ? t.dynamic.waterfallBtn : t.dynamic.equalHeightBtn}
                 </div>
               </div>
             )}

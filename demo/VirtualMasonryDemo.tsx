@@ -1,9 +1,50 @@
 import { useState } from "react";
 import VirtualMasonry from "../src/VirtualMasonry";
 import { loadImageData } from "./imageData";
+import CodeBlock from "./CodeBlock";
+import { useI18n } from "./App";
+import React from "react";
+
+const codeExample = `import { VirtualMasonry } from 'react-virtual-masonry';
+
+function ImageGallery() {
+  const loadData = async (page: number, pageSize: number) => {
+    const response = await fetch(\`/api/images?page=\${page}&size=\${pageSize}\`);
+    const data = await response.json();
+    return {
+      data: data.items,
+      hasMore: data.hasMore,
+    };
+  };
+
+  return (
+    <VirtualMasonry
+      loadData={loadData}
+      pageSize={30}
+      minColumnWidth={200}
+      maxColumnWidth={350}
+      gap={16}
+      renderItem={(item) => (
+        <div
+          style={{
+            position: 'absolute',
+            left: item.x,
+            top: item.y,
+            width: item.width,
+            height: item.height,
+          }}
+        >
+          <img src={item.url} alt={item.title} />
+        </div>
+      )}
+    />
+  );
+}`;
 
 export default function VirtualMasonryDemo() {
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
+  const [showCode, setShowCode] = useState(false);
+  const {t} = useI18n();
 
   const loadData = async (page: number, pageSize: number) => {
     return loadImageData(page, pageSize);
@@ -23,13 +64,42 @@ export default function VirtualMasonryDemo() {
           marginBottom: "20px",
         }}
       >
-        <h2 style={{margin: "0 0 10px 0", fontSize: "18px"}}>
-          瀑布流布局 (Pinterest 风格)
-        </h2>
-        <p style={{margin: 0, color: "#666", fontSize: "14px"}}>
-          不等宽不等高的瀑布流布局,支持虚拟滚动和无限加载
-        </p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: "10px",
+          }}
+        >
+          <div>
+            <h2 style={{margin: "0 0 10px 0", fontSize: "18px"}}>
+              {t.waterfall.title}
+            </h2>
+            <p style={{margin: 0, color: "#666", fontSize: "14px"}}>
+              {t.waterfall.description}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowCode(!showCode)}
+            style={{
+              padding: "8px 16px",
+              background: showCode ? "#2c3e50" : "#3498db",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontSize: "14px",
+              fontWeight: "500",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {showCode ? t.waterfall.hideCode : t.waterfall.showCode}
+          </button>
+        </div>
       </div>
+
+      {showCode && <CodeBlock code={codeExample}/>}
 
       <VirtualMasonry
         loadData={loadData}

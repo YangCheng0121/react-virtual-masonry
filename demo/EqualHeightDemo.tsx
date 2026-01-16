@@ -1,9 +1,50 @@
 import { useState } from "react";
 import FullWidthEqualHeightMasonry from "../src/FullWidthEqualHeightMasonry";
 import { loadImageData } from "./imageData";
+import CodeBlock from "./CodeBlock";
+import { useI18n } from "./App";
+import React from "react";
+
+const codeExample = `import { FullWidthEqualHeightMasonry } from 'react-virtual-masonry';
+
+function PhotoAlbum() {
+  const loadData = async (page: number, pageSize: number) => {
+    const response = await fetch(\`/api/photos?page=\${page}&size=\${pageSize}\`);
+    const data = await response.json();
+    return {
+      data: data.items,
+      hasMore: data.hasMore,
+    };
+  };
+
+  return (
+    <FullWidthEqualHeightMasonry
+      loadData={loadData}
+      pageSize={30}
+      targetRowHeight={245}
+      sizeRange={[230, 260]}
+      gap={8}
+      renderItem={(item) => (
+        <div
+          style={{
+            position: 'absolute',
+            left: item.x,
+            top: item.y,
+            width: item.width,
+            height: item.height,
+          }}
+        >
+          <img src={item.url} alt={item.title} />
+        </div>
+      )}
+    />
+  );
+}`;
 
 export default function EqualHeightDemo() {
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
+  const [showCode, setShowCode] = useState(false);
+  const { t } = useI18n();
 
   const loadData = async (page: number, pageSize: number) => {
     return loadImageData(page, pageSize);
@@ -23,13 +64,42 @@ export default function EqualHeightDemo() {
           marginBottom: "20px",
         }}
       >
-        <h2 style={{margin: "0 0 10px 0", fontSize: "18px"}}>
-          等高布局 (Google Photos 风格)
-        </h2>
-        <p style={{margin: 0, color: "#666", fontSize: "14px"}}>
-          每行高度相同,宽度根据原始比例自动调整以填满整行
-        </p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: "10px",
+          }}
+        >
+          <div>
+            <h2 style={{ margin: "0 0 10px 0", fontSize: "18px" }}>
+              {t.equalHeight.title}
+            </h2>
+            <p style={{ margin: 0, color: "#666", fontSize: "14px" }}>
+              {t.equalHeight.description}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowCode(!showCode)}
+            style={{
+              padding: "8px 16px",
+              background: showCode ? "#2c3e50" : "#3498db",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontSize: "14px",
+              fontWeight: "500",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {showCode ? t.equalHeight.hideCode : t.equalHeight.showCode}
+          </button>
+        </div>
       </div>
+
+      {showCode && <CodeBlock code={codeExample} />}
 
       <FullWidthEqualHeightMasonry
         loadData={loadData}
