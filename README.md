@@ -1,45 +1,50 @@
 # React Virtual Masonry
 
-一个高性能的 React 虚拟滚动瀑布流布局库,支持瀑布流和等高布局两种模式。
+[English](./README.md) | [简体中文](./README.zh-CN.md)
 
-## ✨ 特性
+A high-performance React virtual scrolling masonry layout library with support for waterfall and equal-height layouts.
 
-- 🚀 **高性能虚拟滚动** - 只渲染可视区域内的元素,支持海量数据
-- 📐 **多种布局模式**
-  - 瀑布流布局(Pinterest 风格) - 不等宽不等高
-  - 等高布局(Google Photos 风格) - 每行高度相同,宽度自适应
-  - 动态布局 - 支持根据数据动态切换布局类型
-- 🎯 **智能预加载** - IntersectionObserver 实现的无限滚动
-- 🎨 **完全可定制** - 支持自定义渲染、加载状态、间距等
-- 📱 **响应式设计** - 自动适配不同屏幕尺寸
-- ⚡ **RAF 优化** - 使用 requestAnimationFrame 优化滚动性能
-- 🔧 **TypeScript 支持** - 完整的类型定义
-- 🪶 **零依赖** - 除了 React 不依赖任何第三方库
+## ✨ Features
 
-## 📦 安装
+- 🚀 **High-Performance Virtual Scrolling** - Only renders visible elements, supports massive datasets
+- 📐 **Multiple Layout Modes**
+  - Waterfall Layout (Pinterest Style) - Variable width and height, automatically finds shortest column
+  - Equal Height Layout (Google Photos Style) - Same height per row, width adapts to original aspect ratio
+  - Dynamic Layout - Supports switching layout types based on API response
+- 🎯 **Smart Preloading** - Infinite scroll based on IntersectionObserver with customizable preload distance
+- 🎨 **Fully Customizable** - Custom render functions, loading states, spacing, and more
+- 📱 **Responsive Design** - Automatically adapts to container width changes using ResizeObserver
+- ⚡ **RAF Optimized** - Uses requestAnimationFrame for smooth scrolling performance
+- 🔧 **TypeScript Support** - Complete TypeScript type definitions
+- 🪶 **Zero Dependencies** - No external dependencies except React
+
+## 📦 Installation
 
 ```bash
 npm install react-virtual-masonry
-# 或者
+# or
 yarn add react-virtual-masonry
-# 或者
+# or
 pnpm add react-virtual-masonry
 ```
 
-## 🎯 快速开始
+## 🎯 Quick Start
 
-### 1. 瀑布流布局 (Pinterest 风格)
+### 1. Waterfall Layout (Pinterest Style)
+
+Perfect for image galleries, product listings, etc.
 
 ```tsx
 import { VirtualMasonry } from 'react-virtual-masonry';
 
-function App() {
+function ImageGallery() {
+  // Data loading function
   const loadData = async (page: number, pageSize: number) => {
     const response = await fetch(`/api/images?page=${page}&size=${pageSize}`);
     const data = await response.json();
     return {
-      data: data.items,
-      hasMore: data.hasMore,
+      data: data.items,      // Data array
+      hasMore: data.hasMore, // Whether there's more data
     };
   };
 
@@ -68,12 +73,14 @@ function App() {
 }
 ```
 
-### 2. 等高布局 (Google Photos 风格)
+### 2. Equal Height Layout (Google Photos Style)
+
+Perfect for photo albums, media galleries, etc.
 
 ```tsx
 import { FullWidthEqualHeightMasonry } from 'react-virtual-masonry';
 
-function App() {
+function PhotoAlbum() {
   const loadData = async (page: number, pageSize: number) => {
     const response = await fetch(`/api/photos?page=${page}&size=${pageSize}`);
     const data = await response.json();
@@ -108,22 +115,24 @@ function App() {
 }
 ```
 
-### 3. 动态布局
+### 3. Dynamic Layout
+
+Automatically switches between waterfall and equal-height layouts based on API response.
 
 ```tsx
 import { DynamicMasonryView } from 'react-virtual-masonry';
 
-function App() {
+function Gallery() {
   const loadData = async (page: number, pageSize: number) => {
-    const response = await fetch(`/api/content?page=${page}&size=${pageSize}`);
+    const response = await fetch(`/api/gallery?page=${page}&size=${pageSize}`);
     const data = await response.json();
 
-    // 第一次加载时返回布局类型
+    // First request returns layout type
     if (page === 1) {
       return {
         data: data.items,
         hasMore: data.hasMore,
-        isMasonry: data.layoutType === 'waterfall', // true=瀑布流, false=等高
+        isMasonry: data.layoutType === 'waterfall', // true for waterfall, false for equal-height
       };
     }
 
@@ -165,64 +174,64 @@ function App() {
 }
 ```
 
-## 📖 API 文档
+## 📖 API Documentation
 
-### VirtualMasonry Props
+### VirtualMasonry (Waterfall Layout)
 
-| 属性 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `loadData` | `(page: number, pageSize: number) => Promise<{data: any[], hasMore: boolean}>` | 必填 | 数据加载函数 |
-| `renderItem` | `(item: any, index: number) => React.ReactNode` | 必填 | 渲染每个项目的函数 |
-| `pageSize` | `number` | `50` | 每页加载的数据量 |
-| `minColumnWidth` | `number` | `200` | 最小列宽 |
-| `maxColumnWidth` | `number` | - | 最大列宽 |
-| `gap` | `number` | `16` | 间距 |
-| `buffer` | `number` | `1500` | 缓冲区大小(px) |
-| `loadMoreThreshold` | `number` | `800` | 预加载阈值(px) |
-| `mapSize` | `(raw: any) => {width: number, height: number}` | - | 映射数据的宽高 |
-| `enableAnimation` | `boolean` | `true` | 是否启用动画 |
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `loadData` | `(page: number, pageSize: number) => Promise<{data: any[], hasMore: boolean}>` | Required | Data loading function |
+| `renderItem` | `(item: any, index: number) => React.ReactNode` | Required | Item render function |
+| `pageSize` | `number` | `50` | Items per page |
+| `minColumnWidth` | `number` | `200` | Minimum column width |
+| `maxColumnWidth` | `number` | - | Maximum column width |
+| `gap` | `number` | `16` | Gap between items |
+| `buffer` | `number` | `1500` | Buffer size (px) |
+| `loadMoreThreshold` | `number` | `800` | Preload threshold (px) |
+| `mapSize` | `(raw: any) => {width: number, height: number}` | - | Map data to dimensions |
+| `enableAnimation` | `boolean` | `true` | Enable animations |
 
-### FullWidthEqualHeightMasonry Props
+### FullWidthEqualHeightMasonry (Equal Height Layout)
 
-| 属性 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `loadData` | `(page: number, pageSize: number) => Promise<{data: any[], hasMore: boolean}>` | 必填 | 数据加载函数 |
-| `renderItem` | `(item: any, index: number) => React.ReactNode` | 必填 | 渲染每个项目的函数 |
-| `pageSize` | `number` | `50` | 每页加载的数据量 |
-| `targetRowHeight` | `number` | `245` | 目标行高 |
-| `sizeRange` | `[number, number]` | `[230, 260]` | 行高范围 |
-| `maxItemWidth` | `number` | `975` | 单个项目最大宽度 |
-| `maxStretchRatio` | `number` | `1.5` | 最大拉伸比例 |
-| `gap` | `number` | `8` | 间距 |
-| `buffer` | `number` | `1500` | 缓冲区大小(px) |
-| `loadMoreThreshold` | `number` | `500` | 预加载阈值(px) |
-| `mapSize` | `(raw: any) => {width: number, height: number}` | - | 映射数据的宽高 |
-| `enableAnimation` | `boolean` | `true` | 是否启用动画 |
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `loadData` | `(page: number, pageSize: number) => Promise<{data: any[], hasMore: boolean}>` | Required | Data loading function |
+| `renderItem` | `(item: any, index: number) => React.ReactNode` | Required | Item render function |
+| `pageSize` | `number` | `50` | Items per page |
+| `targetRowHeight` | `number` | `245` | Target row height |
+| `sizeRange` | `[number, number]` | `[230, 260]` | Row height range |
+| `maxItemWidth` | `number` | `975` | Maximum item width |
+| `maxStretchRatio` | `number` | `1.5` | Maximum stretch ratio |
+| `gap` | `number` | `8` | Gap between items |
+| `buffer` | `number` | `1500` | Buffer size (px) |
+| `loadMoreThreshold` | `number` | `500` | Preload threshold (px) |
+| `mapSize` | `(raw: any) => {width: number, height: number}` | - | Map data to dimensions |
+| `enableAnimation` | `boolean` | `true` | Enable animations |
 
-### DynamicMasonryView Props
+### DynamicMasonryView (Dynamic Layout)
 
-| 属性 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `isMasonry` | `boolean` | - | 受控模式:是否使用瀑布流布局 |
-| `defaultIsMasonry` | `boolean` | `true` | 非受控模式:默认布局类型 |
-| `enableAnimation` | `boolean` | `true` | 是否启用动画 |
-| `loadData` | `LoadDataFn` | 必填 | 数据加载函数(第一次调用时可返回isMasonry字段) |
-| `renderItem` | `(item: any, index: number, isMasonry: boolean) => React.ReactNode` | 必填 | 渲染函数,isMasonry表示当前布局类型 |
-| `waterfallConfig` | `WaterfallConfig` | `{}` | 瀑布流配置(minColumnWidth, maxColumnWidth, gap, buffer) |
-| `equalHeightConfig` | `EqualHeightConfig` | `{}` | 等高布局配置(targetRowHeight, sizeRange, maxItemWidth, maxStretchRatio, gap, buffer) |
-| `pageSize` | `number` | `50` | 每页数据量 |
-| `mapSize` | `(raw: any) => {width: number, height: number}` | - | 映射宽高 |
-| `renderInitialLoader` | `() => React.ReactNode` | - | 初始加载状态(确定布局类型前显示) |
-| `onLayoutTypeLoaded` | `(isMasonry: boolean) => void` | - | 布局类型加载完成回调 |
-| `onError` | `(error: Error) => void` | - | 错误回调 |
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `isMasonry` | `boolean` | - | Controlled mode: whether to use waterfall layout |
+| `defaultIsMasonry` | `boolean` | `true` | Uncontrolled mode: default layout type |
+| `enableAnimation` | `boolean` | `true` | Enable animations |
+| `loadData` | `LoadDataFn` | Required | Data loading function (can return isMasonry on first call) |
+| `renderItem` | `(item: any, index: number, isMasonry: boolean) => React.ReactNode` | Required | Render function, isMasonry indicates current layout |
+| `waterfallConfig` | `WaterfallConfig` | `{}` | Waterfall config (minColumnWidth, maxColumnWidth, gap, buffer) |
+| `equalHeightConfig` | `EqualHeightConfig` | `{}` | Equal-height config (targetRowHeight, sizeRange, maxItemWidth, maxStretchRatio, gap, buffer) |
+| `pageSize` | `number` | `50` | Items per page |
+| `mapSize` | `(raw: any) => {width: number, height: number}` | - | Map dimensions |
+| `renderInitialLoader` | `() => React.ReactNode` | - | Initial loading state (shown before layout type is determined) |
+| `onLayoutTypeLoaded` | `(isMasonry: boolean) => void` | - | Layout type loaded callback |
+| `onError` | `(error: Error) => void` | - | Error callback |
 
-## 🎨 自定义样式
+## 🎨 Custom Styling
 
-### 自定义项目渲染
+### Custom Item Rendering
 
 ```tsx
 <VirtualMasonry
-  // ... 其他 props
+  // ... other props
   renderItem={(item) => (
     <div
       style={{
@@ -239,9 +248,21 @@ function App() {
       <img
         src={item.url}
         alt={item.title}
-        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+        }}
       />
-      <div className="overlay">
+      <div style={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        padding: '12px',
+        background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+        color: 'white',
+      }}>
         <h3>{item.title}</h3>
         <p>{item.description}</p>
       </div>
@@ -250,15 +271,15 @@ function App() {
 />
 ```
 
-## 🔧 高级用法
+## 🔧 Advanced Usage
 
-### 映射数据格式
+### Data Mapping
 
-如果你的数据格式与默认不同,可以使用 `mapSize` 来映射:
+If your data structure doesn't have `width` and `height` fields, use `mapSize`:
 
 ```tsx
 <VirtualMasonry
-  // ... 其他 props
+  // ... other props
   mapSize={(item) => ({
     width: item.imageWidth,
     height: item.imageHeight,
@@ -266,66 +287,57 @@ function App() {
 />
 ```
 
-默认支持的字段名:
-- `width` / `w` / `imgW`
-- `height` / `h` / `imgH`
-
-### 性能优化
-
-1. **调整缓冲区大小**: `buffer` 属性控制可视区域外渲染的距离
-2. **调整预加载阈值**: `loadMoreThreshold` 控制何时触发加载
-3. **使用 React.memo**: 优化项目组件的渲染
+### Controlled Dynamic Layout
 
 ```tsx
-const MemoizedItem = React.memo(({ item }) => (
-  <div
-    style={{
-      position: 'absolute',
-      left: item.x,
-      top: item.y,
-      width: item.width,
-      height: item.height,
-    }}
-  >
-    {/* 你的内容 */}
-  </div>
-));
+function App() {
+  const [isMasonry, setIsMasonry] = useState(true);
 
-<VirtualMasonry
-  renderItem={(item) => <MemoizedItem item={item} />}
-/>
+  return (
+    <>
+      <button onClick={() => setIsMasonry(!isMasonry)}>
+        Switch Layout
+      </button>
+      <DynamicMasonryView
+        isMasonry={isMasonry}
+        // ... other props
+      />
+    </>
+  );
+}
 ```
 
-## 🏃 运行 Demo
+## 🎯 Use Cases
 
-```bash
-# 安装依赖
-npm install
+- 📷 **Image Galleries** - Photo albums, image search results
+- 🛍️ **E-commerce** - Product listings, shopping galleries
+- 📰 **Content Feeds** - News feeds, blog posts, social media
+- 🎨 **Portfolio Sites** - Design portfolios, artwork showcases
+- 📱 **Media Libraries** - Video thumbnails, media collections
 
-# 启动开发服务器
-npm run dev
+## 🚀 Performance
 
-# 构建库
-npm run build
-```
+- **Virtual Scrolling**: Only renders visible items, handles 10,000+ items smoothly
+- **Smart Preloading**: Loads next page before reaching the end
+- **RAF Optimization**: Smooth 60fps scrolling
+- **Responsive**: Automatically adapts to window resize
+- **Memory Efficient**: Minimal memory footprint
 
-访问 `http://localhost:3000` 查看 demo。
+## 🤝 Contributing
 
-## 📝 许可证
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-MIT
+## 📄 License
 
-## 🤝 贡献
+MIT License - see the [LICENSE](LICENSE) file for details.
 
-欢迎提交 Issue 和 Pull Request!
+## 🙏 Acknowledgments
 
-## 📮 联系方式
+Inspired by:
+- Pinterest's waterfall layout
+- Google Photos' justified layout
+- React Virtualized
 
-如果你有任何问题或建议,请通过以下方式联系我:
+---
 
-- GitHub Issues: [提交 Issue](https://github.com/yourusername/react-virtual-masonry/issues)
-- Email: your.email@example.com
-
-## 🙏 致谢
-
-感谢所有贡献者的付出!
+Made with ❤️ by [Your Name]
