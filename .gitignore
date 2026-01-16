@@ -39,4 +39,5 @@ yarn-error.log*
 
 .idea/
 package-lock.json
+yarn-lock.json
 .rollup.cache/
