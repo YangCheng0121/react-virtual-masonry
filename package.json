@@ -36,12 +36,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/react-virtual-masonry.git"
+    "url": "https://github.com/cleverbamboo/react-virtual-masonry.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/react-virtual-masonry/issues"
+    "url": "https://github.com/cleverbamboo/react-virtual-masonry/issues"
   },
-  "homepage": "https://github.com/yourusername/react-virtual-masonry#readme",
+  "homepage": "https://github.com/cleverbamboo/react-virtual-masonry#readme",
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
