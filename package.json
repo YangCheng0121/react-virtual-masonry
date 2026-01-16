@@ -1,5 +1,5 @@
 {
-  "name": "@masonry/react-virtual-masonry",
+  "name": "@cleverbamboo/react-virtual-masonry",
   "version": "1.0.0",
   "description": "A high-performance React virtual scrolling masonry layout library with support for waterfall and equal-height layouts",
   "main": "dist/index.js",
