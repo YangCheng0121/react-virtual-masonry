@@ -5,7 +5,7 @@ import CodeBlock from "./CodeBlock";
 import { useI18n } from "./App";
 import React from "react";
 
-const codeExample = `import { DynamicMasonryView } from 'react-virtual-masonry';
+const codeExample = `import { DynamicMasonryView } from '@cleverbamboo/react-virtual-masonry';
 
 function Gallery() {
   const [layoutType, setLayoutType] = useState(true); // true=waterfall, false=equal-height

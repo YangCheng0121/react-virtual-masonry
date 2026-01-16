@@ -5,7 +5,7 @@ import CodeBlock from "./CodeBlock";
 import { useI18n } from "./App";
 import React from "react";
 
-const codeExample = `import { FullWidthEqualHeightMasonry } from 'react-virtual-masonry';
+const codeExample = `import { FullWidthEqualHeightMasonry } from '@cleverbamboo/react-virtual-masonry';
 
 function PhotoAlbum() {
   const loadData = async (page: number, pageSize: number) => {

@@ -5,7 +5,7 @@ import CodeBlock from "./CodeBlock";
 import { useI18n } from "./App";
 import React from "react";
 
-const codeExample = `import { VirtualMasonry } from 'react-virtual-masonry';
+const codeExample = `import { VirtualMasonry } from '@cleverbamboo/react-virtual-masonry';
 
 function ImageGallery() {
   const loadData = async (page: number, pageSize: number) => {

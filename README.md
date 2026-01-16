@@ -27,11 +27,11 @@ Experience all three layout modes with interactive examples and code snippets.
 ## 📦 Installation
 
 ```bash
-npm install react-virtual-masonry
+npm install @cleverbamboo/react-virtual-masonry
 # or
-yarn add react-virtual-masonry
+yarn add @cleverbamboo/react-virtual-masonry
 # or
-pnpm add react-virtual-masonry
+pnpm add @cleverbamboo/react-virtual-masonry
 ```
 
 ## 🎯 Quick Start

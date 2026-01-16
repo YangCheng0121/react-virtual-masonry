@@ -6,7 +6,7 @@
 
 ## 🎮 在线演示
 
-**[查看在线演示](https://yangcheng0121.github.io/react-virtual-masonry/)**
+**[查看在线演示](https://cleverbamboo.github.io/react-virtual-masonry/)**
 
 体验所有三种布局模式的交互式示例和代码片段。
 
@@ -27,11 +27,11 @@
 ## 📦 安装
 
 ```bash
-npm install react-virtual-masonry
+npm install @cleverbamboo/react-virtual-masonry
 # 或者
-yarn add react-virtual-masonry
+yarn add @cleverbamboo/react-virtual-masonry
 # 或者
-pnpm add react-virtual-masonry
+pnpm add @cleverbamboo/react-virtual-masonry
 ```
 
 ## 🎯 快速开始
