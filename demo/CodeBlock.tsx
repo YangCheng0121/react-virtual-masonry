@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface CodeBlockProps {
   code: string;
@@ -53,25 +55,26 @@ export default function CodeBlock({ code, language = "tsx" }: CodeBlockProps) {
           {copied ? "✓ Copied" : "Copy"}
         </button>
       </div>
-      <pre
-        style={{
+      <SyntaxHighlighter
+        language={language}
+        style={vscDarkPlus}
+        customStyle={{
           margin: 0,
           padding: "16px",
-          overflow: "auto",
+          background: "#1e1e1e",
+          fontSize: "13px",
           maxHeight: "400px",
+          overflow: "auto",
         }}
-      >
-        <code
-          style={{
-            color: "#d4d4d4",
-            fontSize: "13px",
+        codeTagProps={{
+          style: {
             fontFamily: "'Consolas', 'Monaco', 'Courier New', monospace",
             lineHeight: "1.6",
-          }}
-        >
-          {code}
-        </code>
-      </pre>
+          },
+        }}
+      >
+        {code}
+      </SyntaxHighlighter>
     </div>
   );
 }
