@@ -41,7 +41,7 @@ pnpm add @cleverbamboo/react-virtual-masonry
 Perfect for image galleries, product listings, etc.
 
 ```tsx
-import { VirtualMasonry } from 'react-virtual-masonry';
+import { VirtualMasonry } from '@cleverbamboo/react-virtual-masonry';
 
 function ImageGallery() {
   // Data loading function
@@ -84,7 +84,7 @@ function ImageGallery() {
 Perfect for photo albums, media galleries, etc.
 
 ```tsx
-import { FullWidthEqualHeightMasonry } from 'react-virtual-masonry';
+import { FullWidthEqualHeightMasonry } from '@cleverbamboo/react-virtual-masonry';
 
 function PhotoAlbum() {
   const loadData = async (page: number, pageSize: number) => {
@@ -126,7 +126,7 @@ function PhotoAlbum() {
 Automatically switches between waterfall and equal-height layouts based on API response.
 
 ```tsx
-import { DynamicMasonryView } from 'react-virtual-masonry';
+import { DynamicMasonryView } from '@cleverbamboo/react-virtual-masonry';
 
 function Gallery() {
   const loadData = async (page: number, pageSize: number) => {

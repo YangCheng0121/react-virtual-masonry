@@ -41,7 +41,7 @@ pnpm add @cleverbamboo/react-virtual-masonry
 适用于图片墙、商品列表等场景。
 
 ```tsx
-import { VirtualMasonry } from 'react-virtual-masonry';
+import { VirtualMasonry } from '@cleverbamboo/react-virtual-masonry';
 
 function ImageGallery() {
   // 数据加载函数
@@ -84,7 +84,7 @@ function ImageGallery() {
 适用于相册、时间线等需要整齐对齐的场景。
 
 ```tsx
-import { FullWidthEqualHeightMasonry } from 'react-virtual-masonry';
+import { FullWidthEqualHeightMasonry } from '@cleverbamboo/react-virtual-masonry';
 
 function PhotoAlbum() {
   const loadData = async (page: number, pageSize: number) => {
@@ -127,7 +127,7 @@ function PhotoAlbum() {
 根据接口返回的数据动态切换布局类型。
 
 ```tsx
-import { DynamicMasonryView } from 'react-virtual-masonry';
+import { DynamicMasonryView } from '@cleverbamboo/react-virtual-masonry';
 
 function DynamicGallery() {
   const loadData = async (page: number, pageSize: number) => {
