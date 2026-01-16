@@ -4,6 +4,12 @@
 
 A high-performance React virtual scrolling masonry layout library with support for waterfall and equal-height layouts.
 
+## 🎮 Live Demo
+
+**[View Live Demo](https://yangcheng0121.github.io/react-virtual-masonry/)**
+
+Experience all three layout modes with interactive examples and code snippets.
+
 ## ✨ Features
 
 - 🚀 **High-Performance Virtual Scrolling** - Only renders visible elements, supports massive datasets

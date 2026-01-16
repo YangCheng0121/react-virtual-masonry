@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
+  base: "/react-virtual-masonry/",
   plugins: [react()],
   root: "./demo",
   resolve: {
@@ -13,5 +14,9 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+  },
+  build: {
+    outDir: "../dist-demo",
+    emptyOutDir: true,
   },
 });
